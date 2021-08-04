@@ -1,0 +1,41 @@
+//Moderate C Program to understand the application of 2-D Arrays.
+#include <stdio.h>
+int main()
+{
+long long int grid[100][50],coins[50];
+int i,j,t,c,r,m;
+for(i=0;i<100;i++)
+{
+    grid[i][0]=1;
+    for(j=1;j<=i&&j<50;j++)
+    {
+    if(j==i) 
+    grid[i][j]=1;
+    else 
+    grid[i][j]=grid[i-1][j]+grid[i-1][j-1];
+    }
+}
+long long int g;
+scanf("%d",&t);
+while(t--)
+{
+    m=0;
+    scanf("%d%d%lld",&r,&c,&g);
+    while(g>0)
+    {
+         r=c;
+         while(grid[r][c]<=g && r<100)
+            r++;
+         r=r-1;
+         g=g-grid[r][c];
+         coins[m]=grid[r][c];
+         m++;
+         c--;
+    }
+    printf("%d\n",m);
+    for(i=0;i<m;i++)
+        printf("%lld ",coins[i]);
+    printf("\n");
+}
+    return 0;
+}
