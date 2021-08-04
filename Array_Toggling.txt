@@ -1,0 +1,30 @@
+//C Program for Toggling in an array.
+#include <stdio.h>
+int lights[100001],n,q,i,l,r;
+void p();
+int main()
+{
+    p();
+	return 0;
+}
+void p()
+{
+  scanf("%d %d",&n,&q);
+    for(i=0;i<n;i++)
+    scanf("%d ",&lights[i]);
+    while(q--)
+    {
+       scanf("%d %d",&l,&r);
+       for(i=0;i<n;i++)
+       {
+           if(i>=l-1&&i<=r-1)
+           {
+               if(lights[i]==0) 
+               lights[i]=1;
+               else 
+               lights[i]=0;
+           }
+       }}
+    for(i=0;i<n;i++)
+    printf("%d ",lights[i]);
+}
