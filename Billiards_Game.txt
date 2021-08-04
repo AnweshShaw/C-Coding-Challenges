@@ -1,0 +1,32 @@
+//C Program to find out the co-ordinates of the billiards ball after being hit and after n collisions.
+#include <stdio.h>
+int main()
+{
+    int n,k,x,y;int d,i;
+    scanf("%d %d %d %d",&n,&k,&x,&y);
+    for(i=1;i<=k;i++)
+    {
+        if(i%4==1)
+        {
+        d=n-x;
+        x=x+d;y=y+d;
+        }
+        else if(i%4==2)
+        {
+            d=n-y;
+            x=x-d;y=y+d;
+        }
+        else if(i%4==3)
+        {
+            d=x;
+            x=x-d;y=y-d;
+        }
+        else
+        {
+            d=y;
+            x=x+d;y=y-d;
+        }
+    }
+    printf("%d %d",x,y);
+	return 0;
+}
