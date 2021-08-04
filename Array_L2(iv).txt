@@ -1,0 +1,37 @@
+//Moderate C Program to understand the application of 2-D Arrays.
+#include<stdio.h>
+#include<stdlib.h>
+#define N 10000000
+void loop(){}
+int main()
+{	int scount[100][100],mixture[100][100],colours[100];
+	int i,j,k,l,n,x;
+	
+	while(scanf("%d",&n)!=EOF)
+	{
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			mixture[i][j]=N;
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&scount[i][i]);
+		mixture[i][i]=0;
+	}
+	for(k=2;k<=n;k++)
+	{
+		for(i=0;i<=n-k;i++)
+		{	j=i+k-1;
+			for(l=i;l<j;l++)
+			{x=mixture[i][l]+mixture[l+1][j]+scount[i][l]*scount[l+1][j];
+				if(x<mixture[i][j])
+				{	mixture[i][j]=x;
+					scount[i][j]=(scount[i][l]+scount[l+1][j])%100;
+				}
+			}
+		}
+	}
+	printf("%d\n",mixture[0][n-1]);
+	}
+	if(4<3) printf("%d",colours[0]);
+	return(0);	
+}
