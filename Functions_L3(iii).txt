@@ -1,0 +1,50 @@
+//Moderate C Program on functions.
+#include <stdio.h>
+long int h,a,b,c,k;
+long int ways(long int h1,long int k1);
+long int arr[10000][100];
+int main()
+{long int i,j;
+scanf("%ld%ld%ld%ld%ld",&h,&a,&b,&c,&k);
+for(i=0;i<10000;i++){
+    for(j=0;j<100;j++){
+        arr[i][j]=-1;
+    }
+}
+printf("%ld",ways(h,k)%1000000007);
+	return 0;
+}
+long int ways(long int h1,long int k1) 
+{
+    if(h1==0&&k1==0)return 1;
+    if((h1==0&&k1!=0)||(h1!=0&&k1==0))return 0;
+    long int m=0,n=0,r=0;
+    if(h1>=a){
+        if(arr[h1-a][k1-1]==-1){
+            m=ways(h1-a,k1-1);
+            arr[h1-a][k1-1]=m;
+        }
+        else{
+            m=arr[h1-a][k1-1];
+        }
+    }
+    if(h1>=b){
+        if(arr[h1-b][k1-1]==-1){
+            n=ways(h1-b,k1-1);
+            arr[h1-b][k1-1]=n;
+        }
+        else{
+            n=arr[h1-b][k1-1];
+        }
+    }
+    if(h1>=c){
+    if(arr[h1-c][k1-1]==-1){
+        r=ways(h1-c,k1-1);
+        arr[h1-c][k1-1]=r;
+    }
+    else{
+        r=arr[h1-c][k1-1];
+    }
+    }
+    return(m+n+r);
+}
