@@ -1,0 +1,39 @@
+#include <stdio.h>
+//Moderate C Program to understand application of strings.
+#include <stdlib.h>
+#include <string.h>
+int main()
+{
+    int i,j,t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        char str[33];scanf("%s",str);
+        int d=0;long long int a=0,b=0,c=0;
+        int len=strlen(str);
+        for(i=0;i<len/2;i++)
+        {
+            a=a*10+((int)str[i]-'0');
+            c=a;d=0;b=0;
+        for(j=i+1;j<len;j++)
+        {
+            b=b*10+((int)str[j]-'0');
+            if(b==0||(b-a>1))
+            {
+                d=0;break;}
+            if(b-a==1)
+            {
+                d=1;a=b;b=0;
+            }
+            else
+            d=0;
+        }
+        if(d){
+        printf("YES %lld\n",c);break;}
+        a=c;
+        }
+    if(!d)
+    printf("NO\n");
+    }
+	return 0;
+}
