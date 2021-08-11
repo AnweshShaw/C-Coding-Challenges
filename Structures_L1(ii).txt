@@ -1,0 +1,37 @@
+//Moderate C Program for understanding applications of structures.
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+struct king
+{
+    char cx[5],cy[5];
+};
+int main()
+{ 
+    struct king path;
+    scanf("%s%s",path.cx,path.cy);
+        int x=path.cy[0]-path.cx[0];
+        int y=path.cy[1]-path.cx[1];
+        abs(x>y)?printf("%d\n",abs(x)):printf("%d\n",abs(y)); 
+        while(x||y)
+        {
+            if(x>0)
+            {
+                x--;printf("R");
+            }
+            if(x<0)
+             {
+                 x++;printf("L");
+             }
+            if(y>0)
+            {
+                y--;printf("U");
+            }
+            if(y<0)
+            {
+                y++;printf("D");
+            }
+            printf("\n");
+        }
+    return 0;
+}
