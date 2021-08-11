@@ -1,0 +1,133 @@
+//Difficult C program to understand applications of structures.
+#include<stdio.h>
+#include<stdlib.h>
+#define black 4
+#define white 0
+#define purple 3
+#define grey 2
+int i;
+struct node ** adjlist;int *color,*level,*list;int top=-1;int mh=0;
+struct node 
+{
+    int vertex;
+    struct node* next;};
+void push_adj(int i,int oppo)
+{
+    struct node * temp = (struct node *)malloc(sizeof(struct node));
+    temp->vertex=oppo;
+    temp->next=adjlist[i];
+    adjlist[i]=temp; }
+void put_list(int x)
+{
+	top++;
+	list[top]=x;
+}
+void quicksort(int *A,int a,int b)
+{
+	if(a>=b) return ;
+	int i,j;
+	for(i=a,j=a;i<b;i++)
+	{
+		if(A[i]<A[b])
+		{
+			int temp;
+			temp=A[i];
+			A[i]=A[j];
+			A[j]=temp;
+			j++;
+		}
+	}
+	int temp=A[j];
+	A[j]=A[b];
+	A[b]=temp;
+	quicksort(A,1,j-1);
+	quicksort(A,j+1,b);
+}
+void left_dfs(int s,int parent)
+{
+	if(color[s]!=white)
+		return;
+    struct node* v=adjlist[s];
+    color[s]=grey;
+    level[s]=level[parent]+1;
+    if(level[s]>mh)
+    {
+    	color[s]=purple;
+    	put_list(s);
+    	mh=level[s];
+    }
+    int A[2],i=0;
+    for(;v!=NULL;v=v->next)
+    	if(color[v->vertex]==white)
+    	{
+    		A[i]=v->vertex;
+    		i++;	    
+    	}
+    if(i==0) return ;
+    if(i==1)
+    	left_dfs(A[0],s);
+    if(i==2)
+    {
+    	left_dfs(A[1],s);
+    	left_dfs(A[0],s);
+    }
+}
+void right_dfs(int s,int parent)
+{
+	if(color[s]==black)
+		return;
+	struct node* v=adjlist[s];
+    level[s]=level[parent]+1;
+    if(level[s]>mh)
+    {
+    	if(color[s]!=purple)
+    		put_list(s);
+    	mh=level[s];
+    }
+    color[s]=black;
+    for(;v!=NULL;v=v->next)
+    	if(color[v->vertex]!=black)
+    		right_dfs(v->vertex,s); 
+}
+int main(int argc, char const *argv[])
+{
+	int T;
+	scanf("%d",&T);
+	 // Arrays
+	    struct node* A[100001];
+	    int C[100001],E[100001],B[100001];
+	    adjlist=A;
+	    list=B;
+	    color=C;
+	    level=E;
+	while(T--)
+	{
+	    // vertices and edges 
+	    int ver;
+	    scanf("%d",&ver);
+	    //INITIALIZING
+	    for( i=1;i<=100000;i++)
+	    {
+	        adjlist[i]=NULL;
+	        color[i]=white;
+	    }
+	    	// MAKING LIST
+	    for( i=1;i<=ver-1;i++)
+	    {
+	        int x,y;
+	        scanf("%d %d",&x,&y);
+	        push_adj(x,y);
+	        push_adj(y,x);
+	    }
+	    level[0]=0;top=-1;
+	    mh=0;
+	 	left_dfs(1,0);
+	 	mh=0;
+	 	right_dfs(1,0);
+	 	quicksort(list,0,top);
+	 	for( i=0;i<=top;i++)
+	 		printf("%d ",list[i]);
+	 	printf("\n");
+	}
+    return 0;
+}
