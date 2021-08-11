@@ -1,0 +1,68 @@
+//Difficult C Program to understand structure pointers.
+#include <stdio.h>
+#include <stdlib.h>
+#define N 200000
+void h()
+{
+}
+int min(int a, int b) 
+{
+	return a < b ? a : b;
+}
+ 
+int hard[N], tt[N];
+ 
+int compare(const void *a, const void *b) 
+{
+	int i = *(int *) a;
+	int j = *(int *) b;
+	return tt[i] - tt[j];
+}
+ 
+int main() 
+{
+	int m;
+	scanf("%d", &m);
+	while (m--) {
+		static int ii[N];
+		int n, t, a, b, i, x, y, k, k1, k2, ans;
+		long long time;
+		scanf("%d%d%d%d", &n, &t, &a, &b);
+		for (i = 0; i < n; i++)
+			scanf("%d", &hard[i]);
+		for (i = 0; i < n; i++)
+			scanf("%d", &tt[i]);
+		x = y = 0;
+		for (i = 0; i < n; i++)
+			if (!hard[i])
+				x++;
+			else
+				y++;
+		if ((long long) x * a + (long long) y * b <= t) 
+		{
+			printf("%d\n", n);
+			continue;
+		}
+		for (i = 0; i < n; i++)
+			ii[i] = i;
+		qsort(ii, n, sizeof *ii, compare);
+		ans = time = 0;
+		for (i = 0; i < n; i++) 
+		{
+			if (time < tt[ii[i]])
+			{
+				k1 = min(x, (tt[ii[i]] - 1 - time) / a);
+				k2 = min(y, (tt[ii[i]] - 1 - time - k1 * a) / b);
+				k = i + k1 + k2;
+				if (ans < k)
+					ans = k;
+			}
+			if (!hard[ii[i]])
+				x--, time += a;
+			else
+				y--, time += b;
+		}
+		printf("%d\n", ans);
+	}
+	return 0;
+}
