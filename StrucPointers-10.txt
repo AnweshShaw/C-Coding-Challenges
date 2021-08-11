@@ -1,0 +1,58 @@
+//Difficult C Program to understand structure pointers.
+#include <stdio.h>
+#include <stdlib.h>
+#define N	1000000
+int min(int a, int b) { return a < b ? a : b; }
+int max(int a, int b) { return a > b ? a : b; }
+int compare(const void *a,const void *b) {
+	int ia = *(int *) a;
+	int ib = *(int *) b;
+	return ia - ib;
+}
+int main() {
+	static int vv[N], cc[N], qv[N], qc[N], pp[N];
+	int n, k, i, j, hv, kv, hc, kc, v_, c_;
+	double sum, x;
+	scanf("%d%d", &n, &k);
+	for (i = 0; i < n; i++)
+		scanf("%d", &vv[i]), vv[i] *= 100;
+	for (i = 0; i < n; i++)
+		scanf("%d", &cc[i]);
+	hv = kv = 0;
+	hc = kc = 0;
+	for (i = n - 1, j = n; i >= 0; i--) {
+		int v = vv[i], c = cc[i], p;
+ 
+		while (kv && vv[qv[hv + kv - 1]] <= v)
+			kv--;
+		qv[hv + kv++] = i;
+		while (kc && cc[qc[hc + kc - 1]] >= c)
+			kc--;
+		qc[hc + kc++] = i;
+		c_ = min(c_, cc[i]);
+		while (kv && kc && (v_ = vv[qv[hv]]) >= cc[qc[hc]]) {
+			c_ = cc[qc[hc]];
+			j = max(qv[hv], qc[hc]);
+			if (qv[hv] == j)
+				hv++, kv--;
+			if (qc[hc] == j)
+				hc++, kc--;
+		}
+		if (j == i)
+			p = c_;
+		else if (j == n)
+			p = v_;
+		else
+			p = max(v_, c_);
+		pp[i] = p;
+	}
+	qsort(pp, n, sizeof *pp, compare);
+	sum = 0, x = (double) k / n;
+	for (i = 0; i <= n - k; i++) {
+		sum += pp[i] * x;
+		if (i < n - 1)
+			x *= (double) (n - k - i) / (n - 1 - i);
+	}
+	printf("%f\n", sum);
+	return 0;
+}
