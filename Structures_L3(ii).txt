@@ -1,0 +1,63 @@
+//Moderate C Program to understand applications of structures and unions.
+#include<stdio.h>
+#include<string.h>
+union wonder
+{
+    long long pairs;
+};
+int main()
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        union wonder wo;
+        long long n,i,j;
+        scanf("%lld",&n);
+        char dishes[n][1001];
+        int spiciesQun[32]={0},spicies,bitOr;
+        for(i=0;i<n;i++)
+        scanf("%s",dishes[i]);
+        for(i=0;i<n;i++)
+        {
+            spicies=0;
+            for(j=0;j<strlen(dishes[i]);j++)
+            {
+                switch(dishes[i][j])
+                {
+                    case 'a':
+                        spicies|=16;
+                        break;
+                    case 'e':
+                        spicies|=8;
+                        break;
+                    case 'i':
+                        spicies|=4;
+                        break;
+                    case 'o':
+                        spicies|=2;
+                        break;
+                    case 'u':
+                        spicies|=1;
+                        break;    
+                }
+            }
+            spiciesQun[spicies-1]++;
+        }
+        wo.pairs = 0;
+        for(i=1;i<32;i++)
+        {
+            for(j=i+1;j<32;j++)
+            {
+                bitOr=i|j;
+                if(bitOr==31)
+                {
+                    wo.pairs+=spiciesQun[i-1]*spiciesQun[j-1];
+                }
+            }
+        }
+        wo.pairs+=(spiciesQun[30]*(spiciesQun[30]-1))/2;
+        printf("%lld\n",wo.pairs);
+    }
+    return 0;
+}
