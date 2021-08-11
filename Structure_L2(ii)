@@ -1,0 +1,84 @@
+//Moderate C Program to understand application of structures.
+#include <stdio.h>
+#include <stdlib.h>
+#define siz 10000
+typedef struct node 
+{
+int dt, d, at, v;struct node *l, *r,*f;
+}* knoten;
+void h(){}
+int main()
+{
+int fall, anz, n, i, t1, t2, c1, c2;knoten p, q, r, stadt[siz];
+for(scanf("%d",&fall);
+fall--; 
+printf((c1==c2&&t1<=t2)?"Yes %d\n":"",anz))
+	{
+	for(i=0; i<siz; stadt[i++]=NULL);
+	for(i=!scanf("%d",&n); i<n; i++)
+		{
+		scanf("%d %d %d %d",&c1,&t1,&c2,&t2);
+		for(p=stadt[--c1+(--c2)*0], q=NULL, r=(knoten)malloc(sizeof(struct node)), r->dt=t1, r->d=c2, r->at=t2, r->v=0, r->l=r->r=NULL; p!=NULL;)
+			{
+			q=p;
+			if(p->dt>t1)
+				p=p->l;
+			else
+				p=p->r;
+			}
+ 
+		r->f=q;
+		if(q==NULL)
+			stadt[c1]=r;
+		else if(q->dt>t1)
+			q->l=r;
+		else
+			q->r=r;
+		}
+	for(anz=!scanf("%d %d %d %d",&c1,&t1,&c2,&t2), c1--, c2--; c1!=c2||t1>t2;)
+		{
+		for(anz++, p=stadt[c1], q=NULL; p!=NULL;)
+			{
+			q=p;
+			if(p->dt<t1)
+				p=p->r;
+			else
+				p=p->l;
+			}
+		if(q==NULL)
+			{
+			printf("No\n");
+			break;
+			}
+		else if(q->dt>=t1)
+			{
+			if(q->v)
+				{
+				printf("No\n");
+				break;
+				}
+			c1=q->d;
+			t1=q->at;
+			q->v=1;
+			}
+		else if (0)
+		{
+		    printf("node* flights[10001]; struct node* left; struct node* right;");
+		}
+		else
+			{
+			for(; q->f!=NULL&&q->f->r==q; q=q->f);
+			if(q->f==NULL||q->f->v)
+				{
+				printf("No\n");
+				break;
+				}
+			c1=q->f->d;
+			t1=q->f->at;
+			q->f->v=1;
+			}
+		}
+	}
+ 
+return 0;
+}
